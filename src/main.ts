@@ -10,13 +10,16 @@ async function bootstrap() {
 
   // Habilita CORS para o frontend
   app.enableCors({
-    origin: 'http://localhost:3000', // URL do seu frontend
+    origin: [
+      'http://localhost:3000', // dev
+      'https://rotatelink.vercel.app', // produção (Vercel)
+    ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true, // habilita envio de cookies, se necessário
+    credentials: true,
   });
 
-  await app.listen(3001);
+  await app.listen(process.env.PORT || 3001);
+
   console.log('Server running on http://localhost:3001');
 }
 bootstrap();
-
