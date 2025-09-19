@@ -5,14 +5,12 @@ import { ValidationPipe } from '@nestjs/common';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  // Pipes globais
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
 
+  // 🔓 Libera CORS (teste)
   app.enableCors({
-    origin: [
-      'http://localhost:3000', // dev
-      'https://rotatelink-frontend-v1yw.vercel.app', // produção (Vercel)
-    ],
-    methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+    origin: true,
     credentials: true,
   });
 
@@ -22,4 +20,5 @@ async function bootstrap() {
   console.log(`🚀 Server running on port ${port}`);
 }
 bootstrap();
+
 
