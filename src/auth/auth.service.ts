@@ -12,10 +12,20 @@ export class AuthService {
 
   async register(username: string, password: string) {
     const hashed = await bcrypt.hash(password, 10);
+
     const user = await this.prisma.user.create({
       data: { username, password: hashed },
     });
-    return { id: user.id, username: user.username };
+
+    // gera token já no cadastro
+    const payload = { sub: user.id, username: user.username };
+    const accessToken = this.jwtService.sign(payload);
+
+    return {
+      id: user.id,
+      username: user.username,
+      accessToken,
+    };
   }
 
   async login(username: string, password: string) {
@@ -25,8 +35,14 @@ export class AuthService {
     const isValid = await bcrypt.compare(password, user.password);
     if (!isValid) throw new UnauthorizedException('Senha inválida');
 
-    const payload = { sub: user.id };
-    return { access_token: this.jwtService.sign(payload) };
+    const payload = { sub: user.id, username: user.username };
+    const accessToken = this.jwtService.sign(payload);
+
+    return {
+      message: 'Logged in',
+      accessToken,
+    };
   }
 }
+
 
