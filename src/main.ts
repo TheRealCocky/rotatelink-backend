@@ -12,7 +12,7 @@ async function bootstrap() {
   app.enableCors({
     origin: [
       'http://localhost:3000', // dev
-      'https://rotatelink.vercel.app', // produção (Vercel)
+      'https://rotatelink-frontend-v1yw.vercel.app', // produção (Vercel)
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
