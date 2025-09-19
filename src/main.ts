@@ -9,17 +9,17 @@ async function bootstrap() {
 
   app.enableCors({
     origin: [
-      'http://localhost:3000',
-      'https://rotatelink-frontend-v1yw.vercel.app',
+      'http://localhost:3000', // dev
+      'https://rotatelink-frontend-v1yw.vercel.app', // produção (Vercel)
     ],
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
     credentials: true,
   });
 
-  // 🔑 Se não houver PORT no .env, usa 3001
   const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3001;
   await app.listen(port);
 
-  console.log(`🚀 Server running on http://localhost:${port}`);
+  console.log(`🚀 Server running on port ${port}`);
 }
 bootstrap();
+
